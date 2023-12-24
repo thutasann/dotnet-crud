@@ -1,6 +1,6 @@
 ﻿using dotnet_crud.Common.Model;
 using dotnet_crud.Utils;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 
 namespace dotnet_crud.Repositories
 {
@@ -14,7 +14,7 @@ namespace dotnet_crud.Repositories
         {
             this._configuration = _configuration;
             this._logger = _logger;
-            _mySqlConnection = new MySqlConnection(_configuration["ConnectionStrings:MySqlDBString"]);
+            _mySqlConnection = new MySqlConnection(_configuration["ConnectionStrings:MySqlDBConnection"]);
         }
 
 
@@ -33,7 +33,7 @@ namespace dotnet_crud.Repositories
                     await _mySqlConnection.OpenAsync();
                 }
 
-                using (MySqlCommand sqlCommand = new(SqlQueries.AddInformation, _mySqlConnection))
+                using (MySqlCommand sqlCommand = new MySqlCommand("INSERT INTO CrudApplication(UserName, EmailID, MobileNumber, Salary, Gender) VALUES (@UserName, @EmailID, @MobileNumber, @Salary, @Gender);", _mySqlConnection))
                 {
                     sqlCommand.CommandType = System.Data.CommandType.Text;
                     sqlCommand.CommandTimeout = 180;
@@ -41,22 +41,19 @@ namespace dotnet_crud.Repositories
                     sqlCommand.Parameters.AddWithValue("@EmailID", request.EmailID);
                     sqlCommand.Parameters.AddWithValue("@MobileNumber", request.MobileNumber);
                     sqlCommand.Parameters.AddWithValue("@Gender", request.Gender);
-                    sqlCommand.Parameters.AddWithValue("@Salary", request.Salary);
-                    sqlCommand.Parameters.AddWithValue("@IsActive", false);
                     int Status = await sqlCommand.ExecuteNonQueryAsync();
-
-                    if(Status <= 0)
+                    if (Status <= 0)
                     {
                         response.IsSuccess = false;
-                        response.Message = "Query not Executed";
-                        return response;
+                        response.Message = "AddInformation Query Not Executed";
+                        _logger.LogError("AddInformation Query Not Executed");
                     }
                 }
             }
             catch (Exception e)
             {
                 response.IsSuccess = false;
-                response.Message = e.Message;
+                response.Message = "From Repository " + e.Message;
                 Console.WriteLine(e);
             }
             finally

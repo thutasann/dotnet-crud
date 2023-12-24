@@ -2,8 +2,6 @@
 using dotnet_crud.Services;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace dotnet_crud.Controllers
 {
     [Route("api/[controller]/[Action]")]
@@ -29,7 +27,7 @@ namespace dotnet_crud.Controllers
             catch(Exception e)
             {
                 response.IsSuccess = false;
-                response.Message = e.Message;
+                response.Message = "From Controller " + e.Message;
             }
 
             return Ok(response);

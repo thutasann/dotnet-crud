@@ -1,8 +1,12 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using dotnet_crud.Repositories;
+using dotnet_crud.Services;
 
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<ICrudSL, CrudSL>();
+builder.Services.AddScoped<ICrudRL, CrudRL>();
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

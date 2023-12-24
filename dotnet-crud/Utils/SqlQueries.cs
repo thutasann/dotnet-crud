@@ -2,9 +2,11 @@
 {
 	public class SqlQueries
 	{
-		public static IConfiguration _configuration = new ConfigurationBuilder().AddXmlFile("SqlQueries.xml", true, true).Build();
+        public static IConfiguration _sqlQueryConfiguration = new ConfigurationBuilder()
+           .AddXmlFile("SqlQueries.xml", true, true)
+           .Build();
 
-		public static string AddInformation { get { return _configuration["AddInformation"]; } }
-	}
+        public static string AddInformation { get { return _sqlQueryConfiguration["AddInformation"]; } }
+    }
 }
 
