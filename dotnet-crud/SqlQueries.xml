@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Queries>
+    <AddInformation>
+        <![CDATA[
+           INSERT INTO dotnet_crud.CrudApplication(UserName, EmailID, MobileNumber, Salary, Gender) Values (@UserName, @EmailID, @MobileNumber, @Salary, @Gender)   
+        ]]>
+    </AddInformation>
+</Queries>

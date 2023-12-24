@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.14" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="MySQLConnection" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +21,7 @@
     <None Remove="Repositories\" />
     <None Remove="Common\" />
     <None Remove="Common\Model\" />
+    <None Remove="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
@@ -27,5 +29,6 @@
     <Folder Include="Repositories\" />
     <Folder Include="Common\" />
     <Folder Include="Common\Model\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
 </Project>
