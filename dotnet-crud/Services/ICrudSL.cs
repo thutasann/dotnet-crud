@@ -1,7 +1,7 @@
 ﻿using System;
 namespace dotnet_crud.Services
 {
-	public interface ICrud
+	public interface ICrudSL
 	{
 	}
 }

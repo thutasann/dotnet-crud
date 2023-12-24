@@ -19,11 +19,13 @@
     <None Remove="Services\" />
     <None Remove="Repositories\" />
     <None Remove="Common\" />
+    <None Remove="Common\Model\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Services\" />
     <Folder Include="Repositories\" />
     <Folder Include="Common\" />
+    <Folder Include="Common\Model\" />
   </ItemGroup>
 </Project>
