@@ -16,6 +16,13 @@ namespace dotnet_crud.Repositories
         /// </summary>
         /// <returns></returns>
         public Task<ReadAllInformationResponse> ReadAllInformation();
+
+        /// <summary>
+        /// Update Information By ID Task
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public Task<UpdateInformationByIDResponse> UpdateInformationByID(UpdateInformationByIDRequest request);
     }
 }
 

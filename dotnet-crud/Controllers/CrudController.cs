@@ -54,7 +54,7 @@ namespace dotnet_crud.Controllers
 
                 if(!response.IsSuccess)
                 {
-                    return BadRequest(new { IsSuccess = response.IsSuccess, Message = response.Message });
+                    return BadRequest(new { IsSuccess = response.IsSuccess, Message = response.Message, Data = response });
                 }
             }
             catch(Exception e)
@@ -64,6 +64,32 @@ namespace dotnet_crud.Controllers
                 _logger.LogError("ReadAllInformations Error ", e.Message);
             }
             return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message, Data = response.readAllInformation });
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateInformationByID(UpdateInformationByIDRequest request)
+        {
+            UpdateInformationByIDResponse response = new();
+            _logger.LogInformation("UpdateInformationByID in Controller...");
+
+            try
+            {
+                response = await _crudSL.UpdateInformationByID(request);
+
+                if(!response.IsSuccess)
+                {
+                    return BadRequest(new { IsSuccess = response.IsSuccess, Message = response.Message });
+                }
+            }
+            catch(Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = "UpdateInformationByID Error " + e.Message;
+                _logger.LogError("UpdateInformationByID Error ", e.Message);
+                return BadRequest(new { IsSuccess = response.IsSuccess, Message = response.Message });
+            }
+
+            return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message });
         }
 
     }

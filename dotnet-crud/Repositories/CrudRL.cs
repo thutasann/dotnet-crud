@@ -43,7 +43,9 @@ namespace dotnet_crud.Repositories
                     sqlCommand.Parameters.AddWithValue("@UserName", request.UserName);
                     sqlCommand.Parameters.AddWithValue("@EmailID", request.EmailID);
                     sqlCommand.Parameters.AddWithValue("@MobileNumber", request.MobileNumber);
+                    sqlCommand.Parameters.AddWithValue("@Salary", request.Salary);
                     sqlCommand.Parameters.AddWithValue("@Gender", request.Gender);
+
                     int Status = await sqlCommand.ExecuteNonQueryAsync();
                     if (Status <= 0)
                     {
@@ -138,6 +140,56 @@ namespace dotnet_crud.Repositories
                 _logger.LogError("ReadAllInformation Error in RL" + e.Message);
             }
             finally {
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
+            }
+            return response;
+        }
+
+        public async Task<UpdateInformationByIDResponse> UpdateInformationByID(UpdateInformationByIDRequest request)
+        {
+            _logger.LogInformation("Update Information By ID Repository Layer Calling");
+            UpdateInformationByIDResponse response = new()
+            {
+                IsSuccess = true,
+                Message = "Successful!"
+            };
+
+            try
+            {
+                if(_mySqlConnection.State != System.Data.ConnectionState.Open)
+                {
+                    await _mySqlConnection.OpenAsync();
+                }
+
+                using (MySqlCommand sqlCommand = new(SqlQueries.UpdateInformationByID, _mySqlConnection))
+                {
+                    sqlCommand.CommandType = System.Data.CommandType.Text;
+                    sqlCommand.CommandTimeout = 180;
+                    sqlCommand.Parameters.AddWithValue("@UserId", request.UserId);
+                    sqlCommand.Parameters.AddWithValue("@UserName", request.UserName);
+                    sqlCommand.Parameters.AddWithValue("@EmailID", request.EmailID);
+                    sqlCommand.Parameters.AddWithValue("@MobileNumber", request.MobileNumber);
+                    sqlCommand.Parameters.AddWithValue("@Salary", request.Salary);
+                    sqlCommand.Parameters.AddWithValue("@Gender", request.Gender);
+
+                    int Status = await sqlCommand.ExecuteNonQueryAsync();
+                    if (Status <= 0)
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "UpdateInformationByID Query Not Executed";
+                        _logger.LogError("UpdateInformationByID Query Not Executed");
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = "From Repository " + e.Message;
+                _logger.LogError("UpdateInformation Error in RL ", e.Message);
+            }
+            finally
+            {
                 await _mySqlConnection.CloseAsync();
                 await _mySqlConnection.DisposeAsync();
             }

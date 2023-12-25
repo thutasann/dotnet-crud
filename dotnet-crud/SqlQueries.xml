@@ -15,4 +15,16 @@
 			WHERE IsActive=1;
 		]]>
     </ReadAllInformation>
+
+	<UpdateInformationByID>
+		<![CDATA[
+			UPDATE CrudApplication
+			SET UserName=@UserName,
+				EmailID=@EmailID,
+				MobileNumber=@MobileNumber,
+				Salary=@Salary,
+				Gender=@Gender
+			WHERE UserId=@UserId
+		]]>
+    </UpdateInformationByID>
 </Queries>
