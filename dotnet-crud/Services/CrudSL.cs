@@ -23,6 +23,12 @@ namespace dotnet_crud.Services
             _logger.LogInformation("AddInformation API Calling in Service Layer...");
             return await _curdRL.AddInformation(request);
         }
+
+        public async Task<ReadAllInformationResponse> ReadAllInformation()
+        {
+            _logger.LogInformation("ReadAllInformation API Calling in Service Layer...");
+            return await _curdRL.ReadAllInformation();
+        }
     }
 }
 

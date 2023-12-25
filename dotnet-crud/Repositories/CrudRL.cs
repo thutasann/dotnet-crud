@@ -67,6 +67,82 @@ namespace dotnet_crud.Repositories
             return response;
 
         }
+
+        public async Task<ReadAllInformationResponse> ReadAllInformation()
+        {
+            _logger.LogInformation("Read All Information Repository Layer Calling");
+
+            ReadAllInformationResponse response = new() {
+                IsSuccess = true,
+                Message = "Successful"
+            };
+
+            try
+            {
+                if(_mySqlConnection.State != System.Data.ConnectionState.Open)
+                {
+                    await _mySqlConnection.OpenAsync();
+                }
+
+                using(MySqlCommand sqlCommand = new(SqlQueries.ReadAllInformation, _mySqlConnection))
+                {
+                    try
+                    {
+                        sqlCommand.CommandType = System.Data.CommandType.Text;
+                        sqlCommand.CommandTimeout = 180;
+
+                        using(MySqlDataReader dataReader = await sqlCommand.ExecuteReaderAsync())
+                        {
+                            if(dataReader.HasRows)
+                            {
+                                response.readAllInformation = new List<GetReadAllInformation>();
+
+                                while(await dataReader.ReadAsync())
+                                {
+                                    GetReadAllInformation getData = new()
+                                    {
+                                        UserID = dataReader["UserId"] != DBNull.Value ? Convert.ToInt32(dataReader["UserId"]) : 0,
+                                        UserName = dataReader["UserName"] != DBNull.Value ? Convert.ToString(dataReader["UserName"]) : string.Empty,
+                                        EmailID = dataReader["EmailID"] != DBNull.Value ? Convert.ToString(dataReader["EmailID"]) : string.Empty,
+                                        Salary = dataReader["Salary"] != DBNull.Value ? Convert.ToInt32(dataReader["Salary"]) : 0,
+                                        MobileNumber = dataReader["MobileNumber"] != DBNull.Value ? Convert.ToString(dataReader["MobileNumber"]) : string.Empty,
+                                        Gender = dataReader["Gender"] != DBNull.Value ? Convert.ToString(dataReader["Gender"]) : string.Empty,
+                                        IsActive = dataReader["IsActive"] != DBNull.Value ? Convert.ToBoolean(dataReader["IsActive"]) : false
+                                    };
+                                    response.readAllInformation.Add(getData);
+                                }
+                            }
+                            else
+                            {
+                                response.IsSuccess = true;
+                                response.Message = "Record Not Found / Database Empty";
+                            }
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "From using MysqlCommand " + e.Message;
+                        _logger.LogError("GetllAllInformation Error Occur: Message " + e.Message);
+                    }
+                    finally
+                    {
+                        await _mySqlConnection.DisposeAsync();
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = "From Respository " + e.Message;
+                _logger.LogError("ReadAllInformation Error in RL" + e.Message);
+            }
+            finally {
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
+            }
+            return response;
+        }
     }
 }
 

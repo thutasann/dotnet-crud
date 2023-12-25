@@ -43,6 +43,29 @@ namespace dotnet_crud.Controllers
             return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ReadAllInformations()
+        {
+            ReadAllInformationResponse response = new();
+            _logger.LogInformation("ReadAllInformations Calling in Controller...");
+            try
+            {
+                response = await _crudSL.ReadAllInformation();
+
+                if(!response.IsSuccess)
+                {
+                    return BadRequest(new { IsSuccess = response.IsSuccess, Message = response.Message });
+                }
+            }
+            catch(Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = "From Controller " + e.Message;
+                _logger.LogError("ReadAllInformations Error ", e.Message);
+            }
+            return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message, Data = response.readAllInformation });
+        }
+
     }
 }
 

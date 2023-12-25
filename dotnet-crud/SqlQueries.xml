@@ -7,4 +7,12 @@
 					         VALUES (@UserName, @EmailID, @MobileNumber, @Salary, @Gender);
 		]]>
 	</AddInformation>
+
+	<ReadAllInformation>
+		<![CDATA[
+			SELECT * FROM
+			CrudApplication
+			WHERE IsActive=1;
+		]]>
+    </ReadAllInformation>
 </Queries>

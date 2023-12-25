@@ -10,6 +10,12 @@ namespace dotnet_crud.Repositories
         /// <param name="request"></param>
         /// <returns></returns>
         public Task<AddInformationResponse> AddInformation(AddInformationRequest request);
+
+        /// <summary>
+        /// Read All Information Task
+        /// </summary>
+        /// <returns></returns>
+        public Task<ReadAllInformationResponse> ReadAllInformation();
     }
 }
 

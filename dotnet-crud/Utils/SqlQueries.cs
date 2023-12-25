@@ -7,6 +7,8 @@
            .Build();
 
         public static string AddInformation { get { return _sqlQueryConfiguration["AddInformation"]; } }
+
+        public static string ReadAllInformation { get { return _sqlQueryConfiguration["ReadAllInformation"]; } }
     }
 }
 
