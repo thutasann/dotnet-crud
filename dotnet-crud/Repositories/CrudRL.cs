@@ -23,9 +23,11 @@ namespace dotnet_crud.Repositories
 
             _logger.LogInformation("Add Information Repository Layer Calling");
 
-            AddInformationResponse response = new();
-            response.IsSuccess = true;
-            response.Message = "Successful";
+            AddInformationResponse response = new()
+            {
+                IsSuccess = true,
+                Message = "Successful"
+            };
 
             try
             {
@@ -34,7 +36,7 @@ namespace dotnet_crud.Repositories
                     await _mySqlConnection.OpenAsync();
                 }
 
-                using (MySqlCommand sqlCommand = new MySqlCommand(SqlQueries.AddInformation, _mySqlConnection))
+                using (MySqlCommand sqlCommand = new(SqlQueries.AddInformation, _mySqlConnection))
                 {
                     sqlCommand.CommandType = System.Data.CommandType.Text;
                     sqlCommand.CommandTimeout = 180;

@@ -1,4 +1,5 @@
-﻿using dotnet_crud.Common.Model;
+﻿using System.Text.RegularExpressions;
+using dotnet_crud.Common.Model;
 using dotnet_crud.Repositories;
 
 namespace dotnet_crud.Services
@@ -6,6 +7,9 @@ namespace dotnet_crud.Services
 	public class CrudSL : ICrudSL
 	{
         public readonly ICrudRL _curdRL;
+        public readonly string EmailRegex = @"^[0-9a-zA-Z]+([._+-][0-9a-zA-Z]+)*@[0-9a-zA-Z]+.[a-zA-Z]{2,4}([.][a-zA-Z]{2,3})?$";
+        public readonly string MobileRegex = @"([1-9]{1}[0-9]{9})$";
+        public readonly string GenderRegex = @"^(?:m|male|f|female)$";
 
         public CrudSL(ICrudRL _curdRL)
         {
