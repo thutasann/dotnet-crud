@@ -57,7 +57,7 @@ namespace dotnet_crud.Repositories
             {
                 response.IsSuccess = false;
                 response.Message = "From Repository " + e.Message;
-                Console.WriteLine(e);
+                _logger.LogError("AddInformation Error in RL", e.Message);
             }
             finally
             {
