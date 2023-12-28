@@ -195,6 +195,53 @@ namespace dotnet_crud.Repositories
             }
             return response;
         }
+
+        public async Task<DeleteInformationByIDResponse> DeleteInformationByID(DeleteInformationByIDRequest request)
+        {
+            _logger.LogInformation("Delete Information By ID Repository Layer Calling");
+
+            DeleteInformationByIDResponse response = new()
+            {
+                IsSuccess = true,
+                Message = "Successful"
+            };
+
+            try
+            {
+                if(_mySqlConnection.State != System.Data.ConnectionState.Open)
+                {
+                    await _mySqlConnection.OpenAsync();
+                }
+
+                using (MySqlCommand sqlCommand = new(SqlQueries.DeleteInformationByID, _mySqlConnection))
+                {
+                    sqlCommand.CommandType = System.Data.CommandType.Text;
+                    sqlCommand.CommandTimeout = 180;
+                    sqlCommand.Parameters.AddWithValue("@UserId", request.UserId);
+                    int Status = await sqlCommand.ExecuteNonQueryAsync();
+                    if(Status <= 0)
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "Query Not Executed";
+                        _logger.LogError("Error Occured: Delete Query Not Executed");
+                        return response;
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = "From Repository " + e.Message;
+            }
+            finally
+            {
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
+            }
+            return response;
+
+        }
     }
 }
 

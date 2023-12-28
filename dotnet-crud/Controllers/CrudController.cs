@@ -92,6 +92,32 @@ namespace dotnet_crud.Controllers
             return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message });
         }
 
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteInformationByID(DeleteInformationByIDRequest request)
+        {
+            DeleteInformationByIDResponse response = new();
+            _logger.LogInformation("DeleteInformationByID in Controller...");
+
+            try
+            {
+                response = await _crudSL.DeleteInformationByID(request);
+
+                if (!response.IsSuccess)
+                {
+                    return BadRequest(new { IsSuccess = response.IsSuccess, Message = response.Message });
+                }
+            }
+            catch(Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = "DeleteInformationByID Error " + e.Message;
+                _logger.LogError("DeleteInformationByID Error ", e.Message);
+                return BadRequest(new { IsSuccess = response.IsSuccess, Message = response.Message });
+            }
+
+            return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message });
+        }
     }
 }
 

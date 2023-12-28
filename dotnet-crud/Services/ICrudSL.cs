@@ -8,6 +8,7 @@ namespace dotnet_crud.Services
         public Task<AddInformationResponse> AddInformation(AddInformationRequest request);
         public Task<ReadAllInformationResponse> ReadAllInformation();
         public Task<UpdateInformationByIDResponse> UpdateInformationByID(UpdateInformationByIDRequest request);
+        public Task<DeleteInformationByIDResponse> DeleteInformationByID(DeleteInformationByIDRequest request);
     }
 }
 

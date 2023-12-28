@@ -23,6 +23,13 @@ namespace dotnet_crud.Repositories
         /// <param name="request"></param>
         /// <returns></returns>
         public Task<UpdateInformationByIDResponse> UpdateInformationByID(UpdateInformationByIDRequest request);
+
+        /// <summary>
+        /// Delete Information By ID Task
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        public Task<DeleteInformationByIDResponse> DeleteInformationByID(DeleteInformationByIDRequest request);
     }
 }
 

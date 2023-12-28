@@ -27,4 +27,13 @@
 			WHERE UserId=@UserId
 		]]>
     </UpdateInformationByID>
+
+	<DeleteInformationByID>
+		<![CDATA[
+			UPDATE
+			FROM CrudApplication
+			SET IsActive=0
+			WHERE UserId=@UserId
+		]]>
+    </DeleteInformationByID>
 </Queries>

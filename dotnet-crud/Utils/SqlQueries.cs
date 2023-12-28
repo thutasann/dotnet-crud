@@ -11,6 +11,9 @@
         public static string ReadAllInformation { get { return _sqlQueryConfiguration["ReadAllInformation"]; } }
 
         public static string UpdateInformationByID { get { return _sqlQueryConfiguration["UpdateInformationByID"]; } }
+
+        public static string DeleteInformationByID { get { return _sqlQueryConfiguration["DeleteInformationByID"]; } }
+
     }
 }
 
