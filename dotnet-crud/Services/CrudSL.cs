@@ -40,6 +40,13 @@ namespace dotnet_crud.Services
             _logger.LogInformation("DeleteInformationByID calling in Service Layer");
             return await _curdRL.DeleteInformationByID(request);
         }
+
+        public async Task<GetAllDeleteInformationResponse> GetAllDeleteInformation()
+        {
+            _logger.LogInformation("GetAllDeleteInformation calling in Service Layer");
+            return await _curdRL.GetAllDeleteInformation();
+            throw new NotImplementedException();
+        }
     }
 }
 

@@ -30,10 +30,17 @@
 
 	<DeleteInformationByID>
 		<![CDATA[
-			UPDATE
-			FROM CrudApplication
+			UPDATE CrudApplication
 			SET IsActive=0
 			WHERE UserId=@UserId
 		]]>
     </DeleteInformationByID>
+
+	<GetAllDeleteInformation>
+		<![CDATA[
+			SELECT *
+			FROM CrudApplication
+			WHERE IsActive=0;
+		]]>
+    </GetAllDeleteInformation>
 </Queries>

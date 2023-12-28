@@ -30,6 +30,12 @@ namespace dotnet_crud.Repositories
         /// <param name="response"></param>
         /// <returns></returns>
         public Task<DeleteInformationByIDResponse> DeleteInformationByID(DeleteInformationByIDRequest request);
+
+        /// <summary>
+        /// Get All DeleteInformation Task
+        /// </summary>
+        /// <returns></returns>
+        public Task<GetAllDeleteInformationResponse> GetAllDeleteInformation();
     }
 }
 

@@ -118,6 +118,29 @@ namespace dotnet_crud.Controllers
 
             return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> GetAllDeleteInformation()
+        {
+            GetAllDeleteInformationResponse response = new();
+            _logger.LogInformation("DeleteAllInformation API Calling");
+            try
+            {
+                response = await _crudSL.GetAllDeleteInformation();
+
+                if(!response.IsSuccess)
+                {
+                    return BadRequest(new { IsSuccess = response.IsSuccess, Message = response.Message });
+                }
+            }
+            catch(Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = e.Message;
+                _logger.LogError("DeleteAllInformation Controller Error", e.Message);
+            }
+            return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message, Data = response.deletedInformation });
+        }
     }
 }
 

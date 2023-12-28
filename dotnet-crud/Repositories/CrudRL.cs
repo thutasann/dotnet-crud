@@ -242,6 +242,65 @@ namespace dotnet_crud.Repositories
             return response;
 
         }
+
+        public async Task<GetAllDeleteInformationResponse> GetAllDeleteInformation()
+        {
+            _logger.LogInformation("GetAllDeleteInformation RL Calling");
+            GetAllDeleteInformationResponse response = new()
+            {
+                IsSuccess = true,
+                Message = "Successful"
+            };
+            try
+            {
+                if(_mySqlConnection.State != System.Data.ConnectionState.Open)
+                {
+                    await _mySqlConnection.OpenAsync();
+                }
+
+                using(MySqlCommand sqlCommand = new(SqlQueries.GetAllDeleteInformation, _mySqlConnection))
+                {
+                    sqlCommand.CommandType = System.Data.CommandType.Text;
+                    sqlCommand.CommandTimeout = 180;
+                    using(MySqlDataReader dataReader = await sqlCommand.ExecuteReaderAsync())
+                    {
+                        if(dataReader.HasRows)
+                        {
+                            response.deletedInformation = new List<DeletedInformation>();
+
+                            while(await dataReader.ReadAsync())
+                            {
+                                DeletedInformation getData = new();
+                                getData.UserId = dataReader["UserId"] != DBNull.Value ? Convert.ToInt32(dataReader["UserId"]) : 0;
+                                getData.UserName = dataReader["UserName"] != DBNull.Value ? Convert.ToString(dataReader["UserName"]) : null;
+                                getData.EmailId = dataReader["EmailId"] != DBNull.Value ? Convert.ToString(dataReader["EmailId"]) : null;
+                                getData.Gender = dataReader["Gender"] != DBNull.Value ? Convert.ToString(dataReader["Gender"]) : null;
+                                getData.MobileNumber = dataReader["MobileNumber"] != DBNull.Value ? Convert.ToString(dataReader["MobileNumber"]) : null;
+                                getData.Salary = dataReader["Salary"] != DBNull.Value ? Convert.ToInt32(dataReader["Salary"]) : 0;
+                                getData.IsActive = dataReader["IsActive"] != DBNull.Value ? Convert.ToBoolean(dataReader["IsActive"]) : false;
+                                response.deletedInformation.Add(getData);
+                            }
+                        } else
+                        {
+                            response.Message = "No Record at DataBase";
+                            _logger.LogWarning("No Record of Deleted user at Database");
+                        }
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = e.Message;
+                _logger.LogError("GetAllDeleteInformation RL Error", e.Message);
+            }
+            finally
+            {
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
+            }
+            return response;
+        }
     }
 }
 

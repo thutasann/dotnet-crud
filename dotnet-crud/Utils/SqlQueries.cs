@@ -14,6 +14,8 @@
 
         public static string DeleteInformationByID { get { return _sqlQueryConfiguration["DeleteInformationByID"]; } }
 
+        public static string GetAllDeleteInformation { get { return _sqlQueryConfiguration["GetAllDeleteInformation"]; } }
+
     }
 }
 
