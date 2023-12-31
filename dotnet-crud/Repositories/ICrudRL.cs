@@ -43,6 +43,14 @@ namespace dotnet_crud.Repositories
         /// <returns></returns>
         public Task<DeleteAllInactiveInformationResponse> DeleteAllInActiveInformation();
 
+        /// <summary>
+        /// Read Information By ID Task
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public Task<ReadInformationByIdResponse> ReadInformationByID(ReadInformationByIdRequest request);
+
+
     }
 }
 

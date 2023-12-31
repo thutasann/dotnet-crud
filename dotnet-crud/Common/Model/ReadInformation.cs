@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace dotnet_crud.Common.Model
 {
 	public class ReadAllInformationResponse
@@ -17,6 +20,20 @@ namespace dotnet_crud.Common.Model
 		public int Salary { get; set; }
 		public string Gender { get; set; }
 		public bool IsActive { get; set; }
+	}
+
+
+	public class ReadInformationByIdRequest
+	{
+		[Required]
+		public int Id { get; set; }
+	}
+
+	public class ReadInformationByIdResponse
+	{
+		public bool IsSuccess { get; set; }
+		public string Message { get; set; }
+		public GetReadAllInformation readInformation { get; set; }
 	}
 }
 

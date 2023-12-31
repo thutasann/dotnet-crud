@@ -52,6 +52,12 @@ namespace dotnet_crud.Services
             _logger.LogInformation("DeleteAllInActiveInformation calling in Service Layer");
             return await _curdRL.DeleteAllInActiveInformation();
         }
+
+        public async Task<ReadInformationByIdResponse> ReadInformationByID(ReadInformationByIdRequest request)
+        {
+            _logger.LogInformation("ReadInformationByID calling in Service Layer");
+            return await _curdRL.ReadInformationByID(request);
+        }
     }
 }
 

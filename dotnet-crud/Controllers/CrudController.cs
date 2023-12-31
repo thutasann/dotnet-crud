@@ -92,7 +92,6 @@ namespace dotnet_crud.Controllers
             return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message });
         }
 
-
         [HttpDelete]
         public async Task<IActionResult> DeleteInformationByID(DeleteInformationByIDRequest request)
         {
@@ -168,6 +167,29 @@ namespace dotnet_crud.Controllers
             }
 
             return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ReadInformationByID(ReadInformationByIdRequest request)
+        {
+            _logger.LogInformation("ReadInformationByID API Calling");
+            ReadInformationByIdResponse response = new();
+            try
+            {
+                response = await _crudSL.ReadInformationByID(request);
+
+                if(!response.IsSuccess)
+                {
+                    return BadRequest(new { IsSuccess = response.IsSuccess, Message = response.Message });
+                }
+            }
+            catch(Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = e.Message;
+
+            }
+            return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message, Data = response.readInformation });
         }
     }
 }

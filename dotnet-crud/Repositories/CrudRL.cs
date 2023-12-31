@@ -345,6 +345,62 @@ namespace dotnet_crud.Repositories
             }
             return response;
         }
+
+        public async Task<ReadInformationByIdResponse> ReadInformationByID(ReadInformationByIdRequest request)
+        {
+            _logger.LogInformation("ReadInformationByID RL Calling");
+            ReadInformationByIdResponse response = new()
+            {
+                IsSuccess = true,
+                Message = "Successful"
+            };
+            try
+            {
+                if(_mySqlConnection.State != System.Data.ConnectionState.Open)
+                {
+                    await _mySqlConnection.OpenAsync();
+                }
+
+                using(MySqlCommand sqlCommand = new(SqlQueries.ReadInformationByID, _mySqlConnection))
+                {
+                    sqlCommand.CommandType = System.Data.CommandType.Text;
+                    sqlCommand.CommandTimeout = 180;
+                    sqlCommand.Parameters.AddWithValue("@Id", request.Id);
+                    using(MySqlDataReader dataReader = await sqlCommand.ExecuteReaderAsync())
+                    {
+                        if(dataReader.HasRows)
+                        {
+                            response.readInformation = new GetReadAllInformation();
+                            await dataReader.ReadAsync();
+                            response.readInformation.UserID = dataReader["UserId"] != DBNull.Value ? Convert.ToInt32(dataReader["UserId"]) : 0;
+                            response.readInformation.UserName = dataReader["UserName"] != DBNull.Value ? Convert.ToString(dataReader["UserName"]) : null;
+                            response.readInformation.EmailID = dataReader["EmailId"] != DBNull.Value ? Convert.ToString(dataReader["EmailId"]) : null;
+                            response.readInformation.Gender = dataReader["Gender"] != DBNull.Value ? Convert.ToString(dataReader["Gender"]) : null;
+                            response.readInformation.Salary = dataReader["Salary"] != DBNull.Value ? Convert.ToInt32(dataReader["Salary"]) : 0;
+                            response.readInformation.MobileNumber = dataReader["MobileNumber"] != DBNull.Value ? Convert.ToString(dataReader["MobileNumber"]) : null;
+                            response.readInformation.IsActive = dataReader["IsActive"] != DBNull.Value ? Convert.ToBoolean(dataReader["IsActive"]) : false;
+                        }
+                        else
+                        {
+                            response.Message = "No Data Found for that User";
+                            _logger.LogWarning("No Data Found for that User");
+                        }
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = "ReadInformationByID Error from RL " + e.Message;
+                _logger.LogError("ReadInformationByID Error from RL", e.Message);
+            }
+            finally
+            {
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
+            }
+            return response;
+        }
     }
 }
 

@@ -51,4 +51,12 @@
 			WHERE IsActive=0;
 		]]>
     </DeleteAllInActiveInformation>
+
+	<ReadInformationByID>
+		<![CDATA[
+			SELECT *
+			FROM CrudApplication
+			WHERE UserId=@Id;
+		]]>
+    </ReadInformationByID>
 </Queries>

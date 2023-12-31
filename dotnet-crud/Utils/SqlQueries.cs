@@ -18,6 +18,8 @@
 
         public static string DeleteAllInActiveInformation { get { return _sqlQueryConfiguration["DeleteAllInActiveInformation"]; } }
 
+        public static string ReadInformationByID { get { return _sqlQueryConfiguration["ReadInformationByID"]; } }
+
     }
 }
 
