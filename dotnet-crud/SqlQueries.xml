@@ -43,4 +43,12 @@
 			WHERE IsActive=0;
 		]]>
     </GetAllDeleteInformation>
+
+	<DeleteAllInActiveInformation>
+		<![CDATA[
+			DELETE
+			FROM CrudApplication
+			WHERE IsActive=0;
+		]]>
+    </DeleteAllInActiveInformation>
 </Queries>

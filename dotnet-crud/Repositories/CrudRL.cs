@@ -301,6 +301,50 @@ namespace dotnet_crud.Repositories
             }
             return response;
         }
+
+        public async Task<DeleteAllInactiveInformationResponse> DeleteAllInActiveInformation()
+        {
+            _logger.LogInformation("DeleteAllInActiveInformation RL Calling");
+            DeleteAllInactiveInformationResponse response = new()
+            {
+                IsSuccess = true,
+                Message = "Successful"
+            };
+            try
+            {
+                if(_mySqlConnection.State != System.Data.ConnectionState.Open)
+                {
+                    await _mySqlConnection.OpenAsync();
+                }
+
+                using (MySqlCommand sqlCommand = new(SqlQueries.DeleteAllInActiveInformation, _mySqlConnection))
+                {
+                    sqlCommand.CommandType = System.Data.CommandType.Text;
+                    sqlCommand.CommandTimeout = 180;
+                    int Status = await sqlCommand.ExecuteNonQueryAsync();
+                    if(Status <= 0)
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "Query Not Executed";
+                        _logger.LogError("Error Occur : Query Not Executed");
+                        return response;
+                    }
+                }
+
+            }
+            catch(Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = "Successful";
+                _logger.LogError("DeleteAllInActiveInformation Error in RL", e.Message);
+            }
+            finally
+            {
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
+            }
+            return response;
+        }
     }
 }
 

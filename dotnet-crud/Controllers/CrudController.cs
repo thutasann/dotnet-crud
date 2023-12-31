@@ -141,6 +141,34 @@ namespace dotnet_crud.Controllers
             }
             return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message, Data = response.deletedInformation });
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAllInActiveInformation()
+        {
+            DeleteAllInactiveInformationResponse response = new()
+            {
+                IsSuccess = true,
+                Message = "Successful"
+            };
+            _logger.LogInformation("DeleteAllInActiveInformation API Calling");
+
+            try
+            {
+                response = await _crudSL.DeleteAllInActiveInformation();
+
+                if(!response.IsSuccess)
+                {
+                    return BadRequest(new { IsSuccess = response.IsSuccess, Message = response.Message });
+                }
+            }
+            catch(Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = e.Message;
+            }
+
+            return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message });
+        }
     }
 }
 

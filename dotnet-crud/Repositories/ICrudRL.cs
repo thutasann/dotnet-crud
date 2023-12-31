@@ -36,6 +36,13 @@ namespace dotnet_crud.Repositories
         /// </summary>
         /// <returns></returns>
         public Task<GetAllDeleteInformationResponse> GetAllDeleteInformation();
+
+        /// <summary>
+        /// Delete All Inactive Information Task
+        /// </summary>
+        /// <returns></returns>
+        public Task<DeleteAllInactiveInformationResponse> DeleteAllInActiveInformation();
+
     }
 }
 

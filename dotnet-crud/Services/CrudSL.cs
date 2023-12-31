@@ -45,7 +45,12 @@ namespace dotnet_crud.Services
         {
             _logger.LogInformation("GetAllDeleteInformation calling in Service Layer");
             return await _curdRL.GetAllDeleteInformation();
-            throw new NotImplementedException();
+        }
+
+        public async Task<DeleteAllInactiveInformationResponse> DeleteAllInActiveInformation()
+        {
+            _logger.LogInformation("DeleteAllInActiveInformation calling in Service Layer");
+            return await _curdRL.DeleteAllInActiveInformation();
         }
     }
 }
