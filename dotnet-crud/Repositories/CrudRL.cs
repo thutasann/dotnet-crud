@@ -401,6 +401,51 @@ namespace dotnet_crud.Repositories
             }
             return response;
         }
+
+        public async Task<UpdateOneInformationByIdResponse> UpdateOneInformationById(UpdateOneInformationByIdRequest request)
+        {
+            _logger.LogInformation("UpdateOneInformationById RL Calling");
+            UpdateOneInformationByIdResponse response = new()
+            {
+                IsSuccess = true,
+                Message = "Successful"
+            };
+            try
+            {
+                if(_mySqlConnection.State != System.Data.ConnectionState.Open)
+                {
+                    await _mySqlConnection.OpenAsync();
+                }
+
+                using(MySqlCommand sqlCommand = new MySqlCommand(SqlQueries.UpdateOneInformationById, _mySqlConnection))
+                {
+                    sqlCommand.CommandType = System.Data.CommandType.Text;
+                    sqlCommand.CommandTimeout = 180;
+                    sqlCommand.Parameters.AddWithValue("@UserId", request.UserId);
+                    sqlCommand.Parameters.AddWithValue("@Salary", request.Salary);
+                    int Status = await sqlCommand.ExecuteNonQueryAsync();
+
+                    if(Status <= 0)
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "Unsuccessful Please check userID";
+                        _logger.LogError("Unsuccessful Please check userID");
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = "UpdateOneInformationById Error in RL " + e.Message;
+                _logger.LogError($"UpdateOneInformationById in RL ", e.Message);
+            }
+            finally
+            {
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
+            }
+            return response;
+        }
     }
 }
 

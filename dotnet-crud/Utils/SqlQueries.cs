@@ -20,6 +20,8 @@
 
         public static string ReadInformationByID { get { return _sqlQueryConfiguration["ReadInformationByID"]; } }
 
+        public static string UpdateOneInformationById { get { return _sqlQueryConfiguration["UpdateOneInformationById"]; } }
+
     }
 }
 

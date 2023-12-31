@@ -191,6 +191,29 @@ namespace dotnet_crud.Controllers
             }
             return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message, Data = response.readInformation });
         }
+
+        [HttpPatch]
+        public async Task<IActionResult> UpdateOneInformationById(UpdateOneInformationByIdRequest request)
+        {
+            _logger.LogInformation("UpdateOneInformationById API Calling");
+            UpdateOneInformationByIdResponse response = new();
+            try
+            {
+                response = await _crudSL.UpdateOneInformationById(request);
+                if(!response.IsSuccess)
+                {
+                    return BadRequest(new { IsSuccess = response.IsSuccess, Message = response.Message });
+                }
+            }
+            catch(Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = "Update One Information Error " + e.Message;
+                _logger.LogError($"Update One Information By ID Error ${e.Message}");
+                return BadRequest(new { IsSuccess = response.IsSuccess, Message = e.Message });
+            }
+            return Ok(new { IsSuccess = response.IsSuccess, Message = response.Message });
+        }
     }
 }
 

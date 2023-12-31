@@ -58,6 +58,12 @@ namespace dotnet_crud.Services
             _logger.LogInformation("ReadInformationByID calling in Service Layer");
             return await _curdRL.ReadInformationByID(request);
         }
+
+        public async Task<UpdateOneInformationByIdResponse> UpdateOneInformationById(UpdateOneInformationByIdRequest request)
+        {
+            _logger.LogInformation("UpdateOneInformationById calling in Service Layer");
+            return await _curdRL.UpdateOneInformationById(request);
+        }
     }
 }
 

@@ -33,5 +33,23 @@ namespace dotnet_crud.Common.Model
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
     }
+
+    /// <summary>
+    /// Update One Information By ID
+    /// </summary>
+    public class UpdateOneInformationByIdRequest
+    {
+        [Required(ErrorMessage = "UserId is Required")]
+        public int UserId { get; set; }
+
+        [Required(ErrorMessage = "Salary Is Required")]
+        public int Salary { get; set; }
+    }
+
+    public class UpdateOneInformationByIdResponse
+    {
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; }
+    }
 }
 

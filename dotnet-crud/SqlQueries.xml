@@ -59,4 +59,12 @@
 			WHERE UserId=@Id;
 		]]>
     </ReadInformationByID>
+
+	<UpdateOneInformationById>
+		<![CDATA[
+			UPDATE CrudApplication
+			SET Salary=@Salary
+			WHERE UserId=@UserId
+		]]>
+    </UpdateOneInformationById>
 </Queries>

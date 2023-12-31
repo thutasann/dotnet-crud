@@ -50,7 +50,12 @@ namespace dotnet_crud.Repositories
         /// <returns></returns>
         public Task<ReadInformationByIdResponse> ReadInformationByID(ReadInformationByIdRequest request);
 
-
+        /// <summary>
+        /// Update Information By ID Task
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public Task<UpdateOneInformationByIdResponse> UpdateOneInformationById(UpdateOneInformationByIdRequest request);
     }
 }
 
